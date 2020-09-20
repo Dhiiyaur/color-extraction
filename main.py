@@ -5,8 +5,9 @@ import matplotlib.pyplot as plt
 from collections import Counter
 
 BASE = os.path.dirname(os.path.abspath(__file__))
-os.chdir(BASE + '\data')
-
+#os.chdir(BASE + '\data')
+os.chdir(BASE)
+n_cluster = int(open('n_cluster.txt', 'r').read())
 
 
 def import_image(BASE):
@@ -35,7 +36,6 @@ def rgb_to_hex(color):
 # helper function
 def extraction(k, img):
 
-	k = 5
 	clt = KMeans(n_clusters = k)
 	clt.fit(img)
 
@@ -67,10 +67,12 @@ def create_color_table(hex_colors):
 	fig.savefig('result.png', dpi=100)
 
 
-def main(BASE):
+def main(BASE, n_cluster):
+
+	os.chdir(BASE + '\data')
 
 	img = import_image(BASE)
-	hex_colors = extraction(5, img)
+	hex_colors = extraction(n_cluster, img)
 	create_color_table(hex_colors)
 
-main(BASE)
+main(BASE, n_cluster)
